@@ -1,64 +1,33 @@
 "use client";
-import menuImage from "../../../../public/menu.png";
 import Image from "next/image";
+import menuImage from "../../../../public/menu.png";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const links = [
-  { title: "Homepage", path: "/" },
-  { title: "About", path: "/about" },
-  { title: "Contact", path: "/contact" },
-  { title: "Blog", path: "/blog" },
-];
+import { useState } from "react";
+import NavLinks from "../navLinks/NavLinks";
 
 function Links() {
-  const pathname = usePathname();
-
-  const session = true;
-  const isAdmin = true;
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="md:gap-1 md:flex hidden items-center">
-      {links.map((link, index) => (
-        <Link
-          key={index}
-          href={link.path}
-          className={`${
-            pathname === link.path && "bg-gray-50 text-gray-800 rounded-2xl"
-          } font-medium hover:text-gray-300 px-3.5 py-1.5 flex items-center justify-center`}
-        >
-          {link.title}
-        </Link>
-      ))}
-      <div className="ml-5 flex gap-2">
-        {isAdmin && (
-          <Link
-            className="font-medium hover:text-gray-300 px-3.5 py-1.5 flex items-center justify-center"
-            href={"/admin"}
-          >
-            Admin
-          </Link>
-        )}
-        {session ? (
-          <Link
-            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-            href={"/logout"}
-          >
-            Logout
-          </Link>
-        ) : (
-          <Link
-            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-            href={"/login"}
-          >
-            Login
-          </Link>
-        )}
+    <div>
+      <div className="md:gap-1 md:flex hidden items-center">
+        <NavLinks />
       </div>
-      <div>
+      <div
+        className="block md:hidden cursor-pointer"
+        onClick={() => {
+          setOpen((prev) => !prev);
+        }}
+      >
         <Image src={menuImage} alt="menu" width={20} height={20} />
       </div>
+      {open && (
+        <div className="relative">
+          <div className="bg-[#0d0c22] shadow-md shadow-slate-600  h-screen w-56 flex flex-col gap-4 md:hidden items-center justify-center absolute -right-[40px] top-1">
+            <NavLinks setOpen={setOpen} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
