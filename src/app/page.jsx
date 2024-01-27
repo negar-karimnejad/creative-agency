@@ -1,18 +1,9 @@
 "use client";
-import avatar1 from "@/../public/avatar/1.jpg";
-import { addUser } from "@/lib/data";
 import Image from "next/image";
 import brandImage from "../../public/brands.png";
 import heroImage from "../../public/hero.gif";
 
 export default function Home() {
-  const createUser = async () => {
-    await addUser({
-      username: "Leanne Graham",
-      email: "leanne@gmail.com",
-      password: "123456789",
-    });
-  };
   return (
     <main className="flex flex-col md:flex-row md:text-left text-center items-center justify-between gap-8 md:gap-0 md:mt-0 mt-10">
       <div>
@@ -29,7 +20,6 @@ export default function Home() {
           mockups and layouts.
         </p>
         <button
-          onClick={createUser}
           type="button"
           className="rounded-md px-3 py-2 mr-2 font-medium bg-blue-500 text-white"
         >

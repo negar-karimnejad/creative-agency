@@ -134,19 +134,3 @@ export const getUser = async (id) => {
     throw new Error("Failed to fetch user!");
   }
 };
-export const addUser = async (body) => {
-  const { username, email, password } = body;
-  try {
-    connectDB();
-    const newUser = new User({
-      username,
-      email,
-      password,
-    });
-    await newUser.save();
-    console.log("saved to database");
-    console.log(body);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
