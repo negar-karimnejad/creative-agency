@@ -1,6 +1,11 @@
 import Image from "next/image";
 import contactImage from "../../../public/contact.png";
 
+export const metadata = {
+  title: "Contact Page",
+  description: "Contact page description",
+};
+
 function Contact() {
   return (
     <main className="flex flex-col-reverse md:flex-row md:text-left text-center items-center justify-between gap-8 md:gap-3 md:mt-0 mt-10">

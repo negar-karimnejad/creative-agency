@@ -1,6 +1,11 @@
 import BlogCard from "@/components/blog-card/BlogCard";
 import { getPosts } from "@/lib/data";
 
+export const metadata = {
+  title: "Blog Page",
+  description: "Blog page description",
+};
+
 async function Blog() {
   const posts = await getPosts();
   return (

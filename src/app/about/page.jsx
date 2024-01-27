@@ -1,6 +1,11 @@
 import Image from "next/image";
 import aboutImage from "../../../public/about.png";
 
+export const metadata = {
+  title: "About Page",
+  description: "About page description",
+};
+
 function About() {
   return (
     <main className="flex flex-col md:flex-row md:text-left text-center items-center justify-between gap-8 md:gap-0 md:mt-0 mt-10">
