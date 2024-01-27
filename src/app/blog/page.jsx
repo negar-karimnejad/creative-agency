@@ -5,7 +5,7 @@ async function Blog() {
   const posts = await getPosts();
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <BlogCard key={post.id} post={post} />
       ))}
     </div>
