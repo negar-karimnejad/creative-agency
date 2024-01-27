@@ -1,9 +1,10 @@
 import BlogCard from "@/components/blog-card/BlogCard";
-import { posts } from "@/lib/data";
+import { getPosts } from "@/lib/data";
 
-function Blog() {
+async function Blog() {
+  const posts = await getPosts();
   return (
-    <div className="grid grid-cols-3 gap-y-10">
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
       {posts.map((post) => (
         <BlogCard key={post.id} post={post} />
       ))}

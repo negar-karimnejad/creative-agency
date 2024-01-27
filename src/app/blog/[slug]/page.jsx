@@ -1,53 +1,27 @@
-"use client";
-
-import { posts } from "@/lib/data";
+import BlogUser from "@/components/blog-user/BlogUser";
+import { getPost } from "@/lib/data";
 import Image from "next/image";
-import { useParams, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 
-function SingleBlog() {
-  const { slug } = useParams();
-  const title = slug.replaceAll("-", " ");
-
-  const [post, setPost] = useState(null);
-
-  useEffect(() => {
-    setPost(posts.find((post) => post.title === title));
-  }, [title]);
+async function SingleBlog({ params }) {
+  const title = params.slug.replaceAll("-", " ");
+  const post = await getPost(title);
 
   return (
-    <div className="flex gap-20">
+    <div className="flex flex-col-reverse md:text-left text-center md:flex-row gap-12 mt-10">
       <Image
         src={post?.image}
         alt={post?.title}
-        width={300}
+        width={350}
         height={100}
-        className="object-cover h-[calc(100vh-200px)]"
+        className="object-cover h-[calc(100vh-200px)] md:mx-0 mx-auto"
       />
-      <div className="flex flex-col gap-10">
-        <h6 className="font-medium text-5xl">{post?.title}</h6>
-        <div className="flex gap-5">
-          <div>
-            <Image
-              src={post?.profile}
-              alt={post?.title}
-              width={50}
-              height={50}
-              className="object-cover rounded-full "
-            />
-          </div>
-          <div className="flex gap-5">
-            <div>
-              <p className="text-gray-400 mb-1">Author</p>
-              <p className="font-bold">{post?.author}</p>
-            </div>
-            <div>
-              <p className="text-gray-400 mb-1">Published</p>
-              <p className="font-bold">{post?.date}</p>
-            </div>
-          </div>
-        </div>
-        <p className="text-gray-300 max-w-xl text-sm">{post?.description}</p>
+      <div className="flex flex-col">
+        <h6 className="font-medium text-5xl mb-10">{post?.title}</h6>
+        <Suspense fallback={<div>Loading...</div>}>
+          <BlogUser userId={post.userId} />
+        </Suspense>
+        <p className="text-gray-300 max-w-2xl text-sm">{post?.description}</p>
       </div>
     </div>
   );

@@ -1,3 +1,7 @@
+import avatar1 from "@/../public/avatar/1.jpg";
+import avatar2 from "@/../public/avatar/2.jpg";
+import avatar3 from "@/../public/avatar/3.jpg";
+import avatar4 from "@/../public/avatar/4.jpg";
 import postImage1 from "@/../public/posts/post (1).jpeg";
 import postImage10 from "@/../public/posts/post (10).jpeg";
 import postImage3 from "@/../public/posts/post (3).jpeg";
@@ -6,88 +10,97 @@ import postImage5 from "@/../public/posts/post (5).jpeg";
 import postImage7 from "@/../public/posts/post (7).jpeg";
 import postImage8 from "@/../public/posts/post (8).jpeg";
 import postImage9 from "@/../public/posts/post (9).jpeg";
-import avatar1 from "@/../public/avatar/2.jpg";
 
-export const posts = [
+const posts = [
   {
     id: 1,
-    title: "Me and sea",
+    title: "Tents",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit.",
+      "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
     image: postImage1,
     date: "Jan 27 2024",
     userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
   },
   {
     id: 2,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Woman in blue",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit.",
     image: postImage10,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 2,
   },
   {
     id: 3,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "A beatiful summer day",
+    description:
+      "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
     image: postImage3,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 3,
   },
   {
     id: 4,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Japanese customs",
+    description:
+      "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
     image: postImage4,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 4,
   },
   {
     id: 5,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Wedding Morning",
+    description:
+      "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
     image: postImage5,
     date: "Jan 27 2024",
     userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
   },
   {
     id: 6,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Modernism",
+    description:
+      "ut aspernatur corporis harum nihil quis provident sequi\nmollitia nobis aliquid molestiae\nperspiciatis et ea nemo ab reprehenderit accusantium quas\nvoluptate dolores velit et doloremque molestiae",
     image: postImage9,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 2,
   },
   {
     id: 7,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Countryside",
+    description:
+      "dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae",
     image: postImage7,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 3,
   },
   {
     id: 8,
-    title: "me and sea",
-    description: "Another Desc",
+    title: "Pasture",
+    description:
+      "consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas",
     image: postImage8,
     date: "Jan 27 2024",
-    userId: 1,
-    author: "Tiffany Haddish",
-    profile: avatar1,
+    userId: 4,
   },
 ];
+
+const users = [
+  { id: 1, author: "Leanne Graham", profile: avatar1 },
+  { id: 2, author: "Ervin Howell", profile: avatar2 },
+  { id: 3, author: "Clementine Bauch", profile: avatar3 },
+  { id: 4, author: "Patricia Lebsack", profile: avatar4 },
+];
+
+export const getPosts = async () => {
+  return posts;
+};
+export const getPost = async (title) => {
+  const post = posts.find((post) => post.title === title);
+  return post;
+};
+
+export const getUser = async (id) => {
+  return users.find((user) => user.id === id);
+};
