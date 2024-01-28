@@ -1,3 +1,6 @@
+"use client";
+
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,9 +13,7 @@ const links = [
 
 function NavLinks({ setOpen }) {
   const pathname = usePathname();
-
-  const session = true;
-  const isAdmin = true;
+  const { data: session, status } = useSession();
 
   return (
     <>
@@ -28,29 +29,31 @@ function NavLinks({ setOpen }) {
           {link.title}
         </Link>
       ))}
-      {isAdmin && (
-        <Link
-          className="font-medium hover:text-gray-300 px-3.5 py-1.5 flex items-center justify-center"
-          href={"/admin"}
-        >
-          Admin
-        </Link>
-      )}
-      {session ? (
-        <Link
-          className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-          href={"/logout"}
-        >
-          Logout
-        </Link>
-      ) : (
-        <Link
-          className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-          href={"/login"}
-        >
-          Login
-        </Link>
-      )}
+      <div className="flex flex-col md:flex-row items-center gap-2 md:ml-5">
+        {session?.user.isAdmin && (
+          <Link
+            className="font-medium hover:text-gray-300 px-3.5 py-1.5 flex items-center justify-center"
+            href={"/admin"}
+          >
+            Admin
+          </Link>
+        )}
+        {session?.user ? (
+          <button
+            onClick={() => signOut()}
+            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link
+            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+            href={"/login"}
+          >
+            Login
+          </Link>
+        )}
+      </div>
     </>
   );
 }

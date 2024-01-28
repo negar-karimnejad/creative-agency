@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import brandImage from "../../public/brands.png";
 import heroImage from "../../public/hero.gif";

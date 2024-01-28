@@ -2,9 +2,8 @@ import BlogUser from "@/components/blog-user/BlogUser";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export const getSinglePost = async (slug) => {
+export const getData = async (slug) => {
   const res = await fetch(`http://localhost:3000/blog/${slug}`);
-  console.log(res.json(), "😎");
 
   if (!res.ok) {
     throw new Error("Something went wrong");
@@ -15,8 +14,7 @@ export const getSinglePost = async (slug) => {
 
 async function SingleBlog({ params }) {
   const { slug } = params;
-  const post = await getSinglePost(slug);
-  console.log(post, "😎");
+  const post = await getData(slug);
   return (
     <div className="flex flex-col-reverse md:text-left text-center md:flex-row gap-12 mt-10">
       <Image
