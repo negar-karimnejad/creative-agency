@@ -3,8 +3,8 @@ import Image from "next/image";
 import React from "react";
 
 async function BlogUser({ userId }) {
-  const user = await getUser(userId);
-
+  // const user = await getUser(userId);
+  const user = {};
   return (
     <div className="flex items-center md:justify-start justify-center gap-x-5 mb-10">
       <Image

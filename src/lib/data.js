@@ -1,17 +1,17 @@
-import avatar1 from "@/../public/avatar/1.jpg";
-import avatar2 from "@/../public/avatar/2.jpg";
-import avatar3 from "@/../public/avatar/3.jpg";
-import avatar4 from "@/../public/avatar/4.jpg";
-import postImage1 from "@/../public/posts/post (1).jpeg";
-import postImage10 from "@/../public/posts/post (10).jpeg";
-import postImage3 from "@/../public/posts/post (3).jpeg";
-import postImage4 from "@/../public/posts/post (4).jpeg";
-import postImage5 from "@/../public/posts/post (5).jpeg";
-import postImage7 from "@/../public/posts/post (7).jpeg";
-import postImage8 from "@/../public/posts/post (8).jpeg";
-import postImage9 from "@/../public/posts/post (9).jpeg";
-import { Post, User } from "./models";
-import connectDB from "./utilies";
+// import avatar1 from "@/../public/avatar/1.jpg";
+// import avatar2 from "@/../public/avatar/2.jpg";
+// import avatar3 from "@/../public/avatar/3.jpg";
+// import avatar4 from "@/../public/avatar/4.jpg";
+// import postImage1 from "@/../public/posts/post (1).jpeg";
+// import postImage10 from "@/../public/posts/post (10).jpeg";
+// import postImage3 from "@/../public/posts/post (3).jpeg";
+// import postImage4 from "@/../public/posts/post (4).jpeg";
+// import postImage5 from "@/../public/posts/post (5).jpeg";
+// import postImage7 from "@/../public/posts/post (7).jpeg";
+// import postImage8 from "@/../public/posts/post (8).jpeg";
+// import postImage9 from "@/../public/posts/post (9).jpeg";
+// import { Post, User } from "./models";
+// import connectDB from "./utilies";
 
 // const posts = [
 //   {
@@ -95,42 +95,42 @@ import connectDB from "./utilies";
 //   { id: 4, author: "Patricia Lebsack", profile: avatar4 },
 // ];
 
-export const getPosts = async () => {
-  try {
-    connectDB();
-    const posts = await Post.find();
-    return posts;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+// export const getPosts = async () => {
+//   try {
+//     connectDB();
+//     const posts = await Post.find();
+//     return posts;
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// };
 
-export const getPost = async (slug) => {
-  try {
-    connectDB();
-    const post = await Post.find({ slug });
-    return post;
-  } catch (error) {
-    throw new Error("Failed to fetch post!");
-  }
-};
+// export const getPost = async (slug) => {
+//   try {
+//     connectDB();
+//     const post = await Post.find({ slug });
+//     return post;
+//   } catch (error) {
+//     throw new Error("Failed to fetch post!");
+//   }
+// };
 
-export const getUsers = async () => {
-  try {
-    connectDB();
-    const users = await User.find();
-    return users;
-  } catch (error) {
-    throw new Error("Failed to fetch users!");
-  }
-};
+// export const getUsers = async () => {
+//   try {
+//     connectDB();
+//     const users = await User.find();
+//     return users;
+//   } catch (error) {
+//     throw new Error("Failed to fetch users!");
+//   }
+// };
 
-export const getUser = async (id) => {
-  try {
-    connectDB();
-    const user = await User.find({ id });
-    return user;
-  } catch (error) {
-    throw new Error("Failed to fetch user!");
-  }
-};
+// export const getUser = async (id) => {
+//   try {
+//     connectDB();
+//     const user = await User.find({ id });
+//     return user;
+//   } catch (error) {
+//     throw new Error("Failed to fetch user!");
+//   }
+// };

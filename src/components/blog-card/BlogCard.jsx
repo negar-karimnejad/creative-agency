@@ -20,10 +20,7 @@ function BlogCard({ post }) {
       <p className="text-sm text-gray-400 line-clamp-3 max-w-80">
         {post.description}
       </p>
-      <Link
-        className="underline text-sm"
-        href={`/blog/${post.title.replaceAll(" ", "-")}`}
-      >
+      <Link className="underline text-sm" href={`/blog/${post.slug}`}>
         READ MORE
       </Link>
     </div>
