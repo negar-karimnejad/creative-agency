@@ -8,5 +8,10 @@ const handler = NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      console.log(user);
+    },
+  },
 });
 export { handler as GET, handler as POST };
