@@ -1,36 +1,33 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormState } from "react-dom";
 import { GithubLoginButton } from "react-social-login-buttons";
 
 function LoginForm() {
-  const router = useRouter();
+  const { data: session } = useSession();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    // e.preventDefault();
+  const handleLogin = async () => {
     try {
-      await signIn("credentials", { username, password });
+      await signIn("credentials", { username, password, callbackUrl: "/" });
     } catch (error) {
-      console.error("Error signing in:", error);
+      console.log("Error:", error);
+      if (!error.message.includes("CredentialsSignIn")) {
+        return { error: "Invalid username or password" };
+      }
+      return { error: "Something went wrong!" };
     }
   };
+  const [errorMessage, dispatch] = useFormState(handleLogin, undefined);
 
-  const [state, formAction] = useFormState(handleLogin, undefined);
-
-  useEffect(() => {
-    state?.success && router.push("/");
-  }, [state?.success, router]);
-  
   return (
     <form
-      action={formAction}
+      action={dispatch}
       className="text-center bg-slate-700 p-8 mx-auto rounded-md max-w-md"
     >
       <input
@@ -49,14 +46,11 @@ function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
         className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
       />
-      <button
-        type="submit"
-        className="mb-2 bg-sky-800 w-full p-3 rounded-md transition-all font-medium hover:bg-sky-700"
-      >
+      <button className="mb-2 bg-sky-800 w-full p-3 rounded-md transition-all font-medium hover:bg-sky-700">
         Login
       </button>
       <GithubLoginButton className="w-full" onClick={() => signIn("github")} />
-      <div className="my-3 text-yellow-300">{state?.error}</div>
+      <div className="my-3 text-yellow-300">{errorMessage?.error}</div>
       <Link href="/register" className="text-sm">
         Don&apos;t have an account? <b>Register</b>
       </Link>

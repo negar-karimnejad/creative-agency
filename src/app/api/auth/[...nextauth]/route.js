@@ -5,44 +5,38 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 
-const login = async (previousState, credentials) => {
-  try {
-    connectDB();
-    const user = await User.findOne({ username: credentials.username });
-
-    if (!user) {
-      return { error: "User Not Found" };
-    }
-
-    const isPasswordCorrect = bcrypt.compareSync(
-      credentials?.password,
-      user.password
-    );
-
-    if (!isPasswordCorrect) {
-      return { error: "Wrong Credentials!" };
-    }
-
-    return user;
-  } catch (error) {
-    console.log(error);
-    return { error: "Faild to login" };
-  }
-};
-
 const handler = NextAuth({
   providers: [
     Github({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+
     CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "your-cool-username",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "your-awesome-password",
+        },
+      },
       async authorize(credentials) {
-        try {
-          const user = await login(credentials);
+        await connectDB();
+
+        const user = await User.findOne({ username: credentials.username });
+
+        if (
+          credentials?.username === user.username &&
+          bcrypt.compareSync(credentials?.password, user.password)
+        ) {
           return user;
-        } catch (error) {
-          console.log(error);
+        } else {
           return null;
         }
       },
