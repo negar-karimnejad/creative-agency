@@ -1,10 +1,9 @@
 "use server";
 
-import connectDB from "./utilies";
-import { Post, User } from "./models";
-import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
-import { signIn } from "next-auth/react";
+import { revalidatePath } from "next/cache";
+import { Post, User } from "./models";
+import connectDB from "./utilies";
 
 export const addPost = async (formData) => {
   const { title, description, userId, slug } = Object.fromEntries(formData);
@@ -66,4 +65,3 @@ export const register = async (formData) => {
     console.log(error);
   }
 };
-

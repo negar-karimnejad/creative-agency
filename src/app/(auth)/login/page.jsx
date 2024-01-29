@@ -3,9 +3,9 @@
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { GithubLoginButton } from "react-social-login-buttons";
+
 export default function LoginPage() {
   const { data: session } = useSession();
-  console.log(session);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

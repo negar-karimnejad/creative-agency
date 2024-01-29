@@ -48,6 +48,7 @@ const handler = NextAuth({
       },
     }),
   ],
+
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account.provider === "github") {
@@ -72,4 +73,5 @@ const handler = NextAuth({
     },
   },
 });
+
 export { handler as GET, handler as POST };
