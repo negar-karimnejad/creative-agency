@@ -37,19 +37,21 @@ export const deletePost = async (formData) => {
   }
 };
 
-export const register = async (formData) => {
+export const register = async (previousState, formData) => {
   const { username, email, password, confirmPassword } =
     Object.fromEntries(formData);
+
   if (password !== confirmPassword) {
-    throw new Error("Passwords do not match.");
+    return { error: "Passwords do not match" };
   }
+
   try {
     connectDB();
 
     const existedUser = await User.findOne({ username });
 
     if (existedUser) {
-      throw new Error("User already registered");
+      return { error: "User already registered" };
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -61,7 +63,9 @@ export const register = async (formData) => {
     });
 
     await newUser.save();
+    return { success: true };
   } catch (error) {
     console.log(error);
+    return { error: { message: error.message } };
   }
 };

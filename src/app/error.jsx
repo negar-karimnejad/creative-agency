@@ -2,7 +2,7 @@
 
 function error() {
   return (
-    <div>error</div>
+    <div>There is an Error</div>
   )
 }
 

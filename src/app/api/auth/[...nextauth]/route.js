@@ -5,13 +5,13 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 
-const login = async (credentials) => {
+const login = async (previousState, credentials) => {
   try {
     connectDB();
     const user = await User.findOne({ username: credentials.username });
 
     if (!user) {
-      return new Error("User Not Found");
+      return { error: "User Not Found" };
     }
 
     const isPasswordCorrect = bcrypt.compareSync(
@@ -20,13 +20,13 @@ const login = async (credentials) => {
     );
 
     if (!isPasswordCorrect) {
-      return new Error("Wrong Credentials!");
+      return { error: "Wrong Credentials!" };
     }
 
     return user;
   } catch (error) {
     console.log(error);
-    return new Error("Faild to login");
+    return { error: "Faild to login" };
   }
 };
 
