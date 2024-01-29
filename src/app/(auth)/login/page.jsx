@@ -1,35 +1,38 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import { login } from "@/lib/actions";
+import { signIn, useSession } from "next-auth/react";
+import { GithubLoginButton } from "react-social-login-buttons";
 
 export default function LoginPage() {
   const { data: session } = useSession();
-  if (session) {
-    return (
-      <div className="flex">
-        Signed in as {session.user.email} <br />
-        <Image
-          className="rounded-full"
-          src={session?.user?.image}
-          alt="Profile"
-          height={60}
-          width={60}
-        />
-        <button onClick={() => signOut()}>Sign out</button>
-      </div>
-    );
-  }
+console.log(session);
   return (
     <div>
-      {!session ? (
-        <button onClick={() => signIn("github")}>Sign in with GitHub</button>
-      ) : (
-        <>
-          <p>Welcome, {session.user.name}!</p>
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      )}
+      <form
+        action={login}
+        className="bg-slate-700 p-8 mx-auto rounded-md max-w-md"
+      >
+        <input
+          type="text"
+          name="username"
+          placeholder="username"
+          className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        />
+        <button className="mb-2 bg-sky-800 w-full p-3 rounded-md transition-all font-medium hover:bg-sky-700">
+          Login
+        </button>
+        <GithubLoginButton
+          className="w-full"
+          onClick={() => signIn("github")}
+        />
+      </form>
     </div>
   );
 }

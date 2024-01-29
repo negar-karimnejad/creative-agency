@@ -1,8 +1,10 @@
 "use server";
 
 import connectDB from "./utilies";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
+import { signIn } from "next-auth/react";
 
 export const addPost = async (formData) => {
   const { title, description, userId, slug } = Object.fromEntries(formData);
@@ -30,7 +32,45 @@ export const deletePost = async (formData) => {
   try {
     connectDB();
     await Post.findOneAndDelete(id);
-    revalidatePath("/blog")
+    revalidatePath("/blog");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const register = async (formData) => {
+  const { username, email, password, confirmPassword } =
+    Object.fromEntries(formData);
+  if (password !== confirmPassword) {
+    throw new Error("Passwords do not match.");
+  }
+  try {
+    connectDB();
+
+    const existedUser = await User.findOne({ username });
+
+    if (existedUser) {
+      throw new Error("User already registered");
+    }
+
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const login = async (formData) => {
+  const { username, password } = Object.fromEntries(formData);
+  try {
+    await signIn("credentials", { username, password });
   } catch (error) {
     console.log(error);
   }
