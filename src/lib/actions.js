@@ -6,7 +6,8 @@ import { Post, User } from "./models";
 import connectDB from "./utilies";
 
 export const addPost = async (formData) => {
-  const { title, description, userId, slug } = Object.fromEntries(formData);
+  const { title, description, userId, slug, image } =
+    Object.fromEntries(formData);
 
   try {
     connectDB();
@@ -16,6 +17,7 @@ export const addPost = async (formData) => {
       description,
       userId,
       slug,
+      image,
     });
 
     await newPost.save();

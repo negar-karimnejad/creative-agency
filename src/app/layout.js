@@ -19,8 +19,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
+          <Navbar />
           <div className="container mx-auto px-10 flex flex-col justify-between min-h-[100vh]">
-            <Navbar />
             {children}
             <Footer />
           </div>

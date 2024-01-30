@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: "../../public/posts/1.png",
+      default: "https://www.pexels.com/photo/manhattan-bridge-19798304/",
     },
     isAdmin: {
       type: Boolean,

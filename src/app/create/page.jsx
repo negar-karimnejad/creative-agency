@@ -28,6 +28,7 @@ function Create() {
           placeholder="slug"
           name="slug"
         />
+        <input type="file" />
         <button type="submit">create</button>
       </form>
       <form action={deletePost}>
