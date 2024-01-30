@@ -1,33 +1,34 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import { useFormState } from "react-dom";
 import { GithubLoginButton } from "react-social-login-buttons";
 
 function LoginForm() {
-  const { data: session } = useSession();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     try {
-      await signIn("credentials", { username, password, callbackUrl: "/" });
+      await signIn("credentials", { username, password, callbackUrl: false });
     } catch (error) {
       console.log("Error:", error);
       if (!error.message.includes("CredentialsSignIn")) {
+        setErrorMessage("Invalid username or password");
         return { error: "Invalid username or password" };
       }
-      return { error: "Something went wrong!" };
+      setErrorMessage({ error: error.message });
+
+      throw { error: error.message };
     }
   };
-  const [errorMessage, dispatch] = useFormState(handleLogin, undefined);
 
   return (
     <form
-      action={dispatch}
+      action={handleLogin}
       className="text-center bg-slate-700 p-8 mx-auto rounded-md max-w-md"
     >
       <input
@@ -50,7 +51,7 @@ function LoginForm() {
         Login
       </button>
       <GithubLoginButton className="w-full" onClick={() => signIn("github")} />
-      <div className="my-3 text-yellow-300">{errorMessage?.error}</div>
+      <div className="my-3 text-yellow-300">{errorMessage}</div>
       <Link href="/register" className="text-sm">
         Don&apos;t have an account? <b>Register</b>
       </Link>

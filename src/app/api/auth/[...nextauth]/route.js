@@ -11,7 +11,6 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -42,7 +41,10 @@ const handler = NextAuth({
       },
     }),
   ],
-
+  pages: {
+    signIn: "/login",
+    error: "/login",
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account.provider === "github") {

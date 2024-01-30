@@ -38,21 +38,23 @@ function NavLinks({ setOpen }) {
             Admin
           </Link>
         )}
-        {session?.user ? (
-          <button
-            onClick={() => signOut()}
-            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link
-            className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-            href={"/login"}
-          >
-            Login
-          </Link>
-        )}
+        <div className="mt-5 md:mt-0" onClick={() => setOpen(false)}>
+          {session?.user ? (
+            <button
+              onClick={() => signOut()}
+              className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+              href={"/login"}
+            >
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </>
   );
