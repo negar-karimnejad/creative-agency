@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      default: "../../public/posts/1.png",
     },
     isAdmin: {
       type: Boolean,
