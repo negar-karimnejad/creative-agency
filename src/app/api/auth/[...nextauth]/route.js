@@ -1,11 +1,11 @@
 import { User } from "@/lib/models";
 import connectDB from "@/lib/utilies";
-import bcrypt from "bcryptjs";
-import NextAuth from "next-auth";
+import bcrypt from "bcrypt";
+import nextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     Github({
       clientId: process.env.GITHUB_ID,
@@ -29,21 +29,29 @@ const handler = NextAuth({
         await connectDB();
 
         const user = await User.findOne({ username: credentials.username });
-
-        if (
-          credentials?.username === user.username &&
-          bcrypt.compareSync(credentials?.password, user.password)
-        ) {
-          return user;
-        } else {
-          return null;
+        if (!user || !user?.password) {
+          throw new Error("Invalid credentials");
         }
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isCorrectPassword) {
+          throw new Error("Invalid credentials");
+        }
+
+        return user;
       },
     }),
   ],
+  debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/login",
     error: "/login",
+  },
+  session: {
+    strategy: "jwt",
   },
   callbacks: {
     async signIn({ user, account, profile }) {
@@ -67,8 +75,8 @@ const handler = NextAuth({
       }
       return true;
     },
-    // 
   },
-});
+};
 
+const handler = nextAuth(authOptions);
 export { handler as GET, handler as POST };

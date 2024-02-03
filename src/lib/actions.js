@@ -1,6 +1,6 @@
 "use server";
 
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { Post, User } from "./models";
 import connectDB from "./utilies";
@@ -39,35 +39,40 @@ export const deletePost = async (formData) => {
   }
 };
 
-export const register = async (previousState, formData) => {
-  const { username, email, password, confirmPassword } =
-    Object.fromEntries(formData);
-
-  if (password !== confirmPassword) {
-    return { error: "Passwords do not match" };
-  }
-
+export const register = async (formData) => {
   try {
-    connectDB();
+    const username = formData.get("username");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
 
-    const existedUser = await User.findOne({ username });
-
-    if (existedUser) {
-      return { error: "User already registered" };
+    if (password !== confirmPassword) {
+      throw new Error("Passwords do not match");
     }
 
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    try {
+      connectDB();
 
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword,
-    });
+      const existedUser = await User.findOne({ username });
 
-    await newUser.save();
-    return { success: true };
+      if (existedUser) {
+        throw new Error("You are already a member");
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+
+      const newUser = new User({
+        username,
+        email,
+        password: hashedPassword,
+      });
+
+      await newUser.save();
+      revalidatePath("/");
+    } catch (existedUser) {
+      return { existedUser: "You are already a member, please sign in" };
+    }
   } catch (error) {
-    console.log(error);
-    return { error: { message: error.message } };
+    return { error: error.message };
   }
 };

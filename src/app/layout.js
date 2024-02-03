@@ -3,6 +3,7 @@ import { AuthProvider } from "@/lib/AuthProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer/Footer";
+import HotToastContext from "@/context/HotToastContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
+          <HotToastContext />
           <Navbar />
           <div className="container mx-auto px-10 flex flex-col justify-between min-h-[100vh]">
             {children}

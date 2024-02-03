@@ -32,7 +32,12 @@ function Create() {
         <button type="submit">create</button>
       </form>
       <form action={deletePost}>
-        <input type="text" className="text-gray-700" placeholder="postId" name="id" />
+        <input
+          type="text"
+          className="text-gray-700"
+          placeholder="postId"
+          name="id"
+        />
         <button type="submit">Delete</button>
       </form>
     </>

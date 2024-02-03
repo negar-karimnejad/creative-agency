@@ -1,23 +1,36 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { register } from "@/lib/actions";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import toast from "react-hot-toast";
 
 function RegisterForm() {
-  const [state, formAction] = useFormState(register, undefined);
-
   const router = useRouter();
+  const ref = useRef(null);
 
-  useEffect(() => {
-    state?.success && router.push("/login");
-  }, [state?.success, router]);
+  const handleSubmit = async (formData) => {
+    const result = await register(formData);
+
+    if (result?.existedUser) {
+      toast.error(result?.existedUser);
+    } else if (result?.error) {
+      toast.error(result?.error);
+    } else {
+      toast.success("Welcome🎉, Please Sign In");
+      ref.current?.reset();
+      router.push("/login");
+    }
+  };
 
   return (
     <form
-      action={formAction}
+      onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        handleSubmit(formData);
+      }}
       className="bg-slate-700 p-8 mx-auto text-center rounded-md max-w-md"
     >
       <input
@@ -44,12 +57,11 @@ function RegisterForm() {
         placeholder="confirm password"
         className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
       />
-      <button className="bg-sky-800 w-full p-2 rounded-md transition-all font-medium hover:bg-sky-700">
+      <button className="bg-sky-800 w-full p-2 rounded-md transition-all font-medium hover:bg-sky-700 mb-2">
         Register
       </button>
-      <div className="my-3 text-yellow-300">{state?.error}</div>
       <Link href="/login" className="text-sm">
-        Have an account? <b>Login</b>
+        Have an account? <span className="underline">Login</span>
       </Link>
     </form>
   );

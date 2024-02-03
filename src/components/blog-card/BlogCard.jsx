@@ -7,7 +7,7 @@ function BlogCard({ post }) {
     <div className=" flex flex-col gap-2">
       <div className="flex items-center relative w-80 h-96">
         <Image
-          src={post.image}
+          src={post?.image}
           alt={post.title}
           fill
           className="object-cover h-[calc(100vh-200px)]"
