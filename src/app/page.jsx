@@ -1,6 +1,7 @@
 import Image from "next/image";
 import brandImage from "../../public/brands.png";
 import heroImage from "../../public/hero.gif";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,15 +19,19 @@ export default function Home() {
           typesetting industry. It&apos;s often used as temporary text in design
           mockups and layouts.
         </p>
-        <button
-          type="button"
-          className="rounded-md px-3 py-2 mr-2 font-medium bg-blue-500 text-white"
-        >
-          Learn More
-        </button>
-        <button className="rounded-md px-3 py-2 font-medium bg-white text-gray-800">
-          Contact
-        </button>
+        <Link href={"/about"}>
+          <button
+            type="button"
+            className="rounded-md px-3 py-2 mr-2 font-medium bg-blue-500 text-white"
+          >
+            Learn More
+          </button>
+        </Link>
+        <Link href={"/contact"}>
+          <button className="rounded-md px-3 py-2 font-medium bg-white text-gray-800">
+            Contact
+          </button>
+        </Link>
         <Image
           className="grayscale mt-8 hidden md:block"
           src={brandImage}
