@@ -1,9 +1,12 @@
-import React from 'react'
+import PageLoader from "@/components/PageLoader";
+import React from "react";
 
 function loading() {
   return (
-    <div>loading...</div>
-  )
+    <div>
+      <PageLoader />
+    </div>
+  );
 }
 
-export default loading
+export default loading;

@@ -40,19 +40,32 @@ function NavLinks({ setOpen }) {
         )}
         <div className="mt-5 md:mt-0" onClick={() => setOpen(false)}>
           {session?.user ? (
-            <button
-              onClick={() => signOut()}
-              className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-            >
-              Logout
-            </button>
+            <div className="flex gap-5 md:flex-row flex-col items-center">
+              <span className="text-sky-400 font-bold">
+                Hello, {session?.user?.email.split("@")[0].toUpperCase()}
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
-            <Link
-              className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
-              href={"/login"}
-            >
-              Login
-            </Link>
+            <div className="flex gap-5 md:flex-row flex-col">
+              <Link
+                className="font-medium bg-gray-200 text-gray-800 hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+                href={"/login"}
+              >
+                Login
+              </Link>
+              <Link
+                className="font-medium hover:bg-gray-300 transition-all px-2 rounded-sm py-0.5 flex items-center justify-center"
+                href={"/register"}
+              >
+                Register
+              </Link>
+            </div>
           )}
         </div>
       </div>

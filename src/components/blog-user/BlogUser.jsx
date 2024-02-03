@@ -1,10 +1,9 @@
-import { getUser } from "@/lib/data";
+import { users } from "@/lib/data";
 import Image from "next/image";
-import React from "react";
 
 async function BlogUser({ userId }) {
-  // const user = await getUser(userId);
-  const user = {};
+  const user = users.find((user) => user.id === userId);
+
   return (
     <div className="flex items-center md:justify-start justify-center gap-x-5 mb-10">
       <Image

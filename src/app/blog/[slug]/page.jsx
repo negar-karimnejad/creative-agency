@@ -1,20 +1,15 @@
 import BlogUser from "@/components/blog-user/BlogUser";
+import { posts } from "@/lib/data";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export const getData = async (slug) => {
-  const res = await fetch(`http://localhost:3000/blog/${slug}`);
-
-  if (!res.ok) {
-    throw new Error("Something went wrong");
-  }
-
-  return res.json();
-};
-
 async function SingleBlog({ params }) {
   const { slug } = params;
-  const post = await getData(slug);
+
+  const post = posts.find(
+    (post) => post.title.toLocaleLowerCase() === slug.replaceAll("-", " ")
+  );
+
   return (
     <div className="flex flex-col-reverse md:text-left text-center md:flex-row gap-12 mt-10">
       <Image
