@@ -11,6 +11,7 @@ function RegisterForm() {
   const { data: session } = useSession();
   const router = useRouter();
   const ref = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
@@ -19,6 +20,7 @@ function RegisterForm() {
   }, [session?.user, router]);
 
   const handleSubmit = async (formData) => {
+    setIsSubmitting(true);
     const result = await register(formData);
 
     if (result?.existedUser) {
@@ -27,6 +29,7 @@ function RegisterForm() {
       toast.error(result?.error);
     } else {
       toast.success("Welcome🎉, Please Sign In");
+      setIsSubmitting(false);
       ref.current?.reset();
       router.push("/login");
     }
@@ -45,28 +48,47 @@ function RegisterForm() {
         type="text"
         name="username"
         placeholder="username"
-        className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting && "opacity-50 cursor-default"
+        } mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full`}
       />
       <input
         type="email"
         name="email"
         placeholder="email"
-        className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting && "opacity-50 cursor-default"
+        } mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full`}
       />
       <input
         type="password"
         name="password"
         placeholder="password"
-        className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting && "opacity-50 cursor-default"
+        } mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full`}
       />
       <input
         type="password"
         name="confirmPassword"
         placeholder="confirm password"
-        className="mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting && "opacity-50 cursor-default"
+        } mb-4 placeholder:text-gray-600 bg-slate-900 outline-none text-white p-3 rounded-md w-full`}
       />
-      <button className="bg-sky-800 w-full p-2 rounded-md transition-all font-medium hover:bg-sky-700 mb-2">
-        Register
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting && "opacity-50 cursor-default"
+        } bg-sky-800 w-full p-2 rounded-md transition-all font-medium hover:bg-sky-700 mb-2
+        `}
+      >
+        {isSubmitting ? "Loading..." : "Register"}
       </button>
       <Link href="/login" className="text-sm">
         Have an account? <span className="underline">Login</span>

@@ -76,7 +76,7 @@ function LoginForm() {
         } mb-2 bg-sky-800 w-full p-3 rounded-md transition-all font-medium hover:bg-sky-700
         `}
       >
-        Login
+        {isSubmitting ? "Loading..." : "Login"}
       </button>
       <GithubLoginButton className="w-full" onClick={() => signIn("github")} />
       <Link href="/register" className="text-sm">
