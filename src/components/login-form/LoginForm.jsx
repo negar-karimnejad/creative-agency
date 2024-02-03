@@ -1,15 +1,22 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { GithubLoginButton } from "react-social-login-buttons";
 
 function LoginForm() {
   const router = useRouter();
   const formRef = useRef(null);
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/");
+    }
+  }, [session?.user, router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

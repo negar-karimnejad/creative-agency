@@ -29,10 +29,11 @@ a{
 /* Page Loader*/
 .loader {
     width: 40px;
+    margin: auto;
     aspect-ratio: 1;
-    --c: linear-gradient(#000 0 0);
-    --r1: radial-gradient(farthest-side at bottom,#000 93%,#0000);
-    --r2: radial-gradient(farthest-side at top   ,#000 93%,#0000);
+    --c: linear-gradient(#ffffff 0 0);
+    --r1: radial-gradient(farthest-side at bottom,#112245 93%,#0000);
+    --r2: radial-gradient(farthest-side at top   ,#112245 93%,#0000);
     background: 
       var(--c) ,var(--r1),var(--r2),
       var(--c) ,var(--r1),var(--r2),

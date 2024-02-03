@@ -1,14 +1,22 @@
 "use client";
 
 import { register } from "@/lib/actions";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 function RegisterForm() {
+  const { data: session } = useSession();
   const router = useRouter();
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/login");
+    }
+  }, [session?.user, router]);
 
   const handleSubmit = async (formData) => {
     const result = await register(formData);

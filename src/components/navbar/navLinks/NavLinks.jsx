@@ -13,7 +13,7 @@ const links = [
 
 function NavLinks({ setOpen }) {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   return (
     <>
